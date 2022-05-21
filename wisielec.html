@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wisielec</title>
+    <style>
+        #wisielec {
+            margin-top: 50px;
+            text-align: center;
+            width: 100%;
+        }
+        #haslo {
+            font-size: 100px;
+            text-align: center;
+            width: 100%;
+            margin-top: 50px;
+            letter-spacing: 1px;
+        }
+        .litera{
+            width: 50px;
+            height: 50px;
+            background-color: antiquewhite;
+           
+        }
+        #klawiatura{
+            text-align: center;
+            width: 100%;
+            margin-top: 50px;
+        }
+    </style>
+    
+</head>
+<body>
+    <div id="pojemnik">
+
+        <div id="wisielec">
+            <img src="img/0.jpg" alt="" />
+        </div>
+
+        <div id="haslo"></div>
+        <div id="klawiatura"></div>      
+       
+   </div>
+
+        <script>
+
+            var haslo = "MAJOWKA"
+            var ukrytehaslo = "_______"
+            var ktoreZdjecie = 0
+            var ilsocZdjec = 10
+
+            function start() {
+                pokazHaslo()        
+                run()
+            }
+
+            function pokazHaslo(){
+                var divHaslo = document.getElementById("haslo")
+                divHaslo.textContent = ukrytehaslo
+            }
+
+            function zmienZdjecie(){
+                ktoreZdjecie++
+                document.getElementById("wisielec").innerHTML = `<img src="img/${ktoreZdjecie}.jpg" alt="" />`
+                if(ktoreZdjecie == ilsocZdjec){
+                    document.getElementById("klawiatura").innerHTML = "PRZEGRALES"
+                }
+
+            }
+
+            function pokazLitere(litera){
+                for(var i = 0; i < haslo.length ; i++){
+                    if(haslo[i] == litera ){ 
+                        ukrytehaslo =  ukrytehaslo.split('');
+                        ukrytehaslo[i] = litera
+                        ukrytehaslo =  ukrytehaslo.join('');
+                    }
+                }
+
+                pokazHaslo()
+                if(!ukrytehaslo.includes("_")) {
+                    document.getElementById("klawiatura").innerHTML = "WYGRALES"
+                }
+            }
+
+
+           function run() {
+                for(var i=65; i<=90; i++){
+                var litera=String.fromCharCode(i)
+                console.log(litera)
+                let btn=document.createElement("button")
+                btn.textContent=litera
+                btn.setAttribute("class", "litera");
+                document.getElementById("klawiatura").appendChild(btn)
+                var text = document.getElementById("text");
+
+                btn.addEventListener("click", function () {
+                    if(haslo.includes(btn.textContent)) {
+                        pokazLitere(btn.textContent)
+                    }
+                    else{
+                        zmienZdjecie()
+                    }
+                    btn.style.display="none"
+
+                })
+
+            }
+           }
+           window.onload=start
+           
+        </script>
+</body>
+</html>
